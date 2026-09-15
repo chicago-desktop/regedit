@@ -1,10 +1,10 @@
 # chicago/regedit — Registry Editor
 
-A module of the Windows 95 shell for the terminal desktop
+A module of the Chicago shell for the terminal desktop
 ([chicago/shell](https://github.com/chicago-desktop/shell) on
 [chicago/tui-desktop](https://github.com/chicago-desktop/tui-desktop)): it adds
 the **Registry Editor** to Start → Settings — a viewer of the runtime's
-registry in the look of Windows 95 regedit.
+registry in the look of the mid-nineties regedit.
 
 On the left, a tree of namespaces split by dots and of the entries inside
 them; on the right, `kind`, `meta.*` and `data.*` of the selected entry; at
@@ -35,7 +35,7 @@ policy allows `*` has it already. Nothing else is asked of the application.
   (`chicago.shell.sdk:app`): reads the registry once on opening, then on F5.
   Its picture is the module's own — `chicago.regedit:images/regedit`, an
   image pack of the shell under `assets/images` (32 and 16 px), copied from
-  the shell's icon set (Microsoft's artwork from `shell32.dll`, see
+  the shell's icon set (an interim icon set, see
   `assets/images/SOURCE.md`).
 - `chicago.regedit:window_scope` — its permissions: the process context,
   sending state to the compositor, reading the registry.
@@ -43,11 +43,11 @@ policy allows `*` has it already. Nothing else is asked of the application.
 ## Developing
 
 ```bash
-make setup     # resolve the dependencies from the Hub (once, and after changing them)
+make setup     # resolve the dependencies (once, and after changing them)
 make check     # the repository's invariants
 make lint      # late locals, then wippy lint of this namespace and the harness
 make test      # the harness in test/: the model, the window, a shot in test/shots/
-make publish   # to the Hub, after `wippy auth login`
+make publish   # publish a release, after `wippy auth login`
 ```
 
 **A local build of the runtime fork is required**
@@ -61,8 +61,8 @@ shell's guide, and the skill for agents in
 [skills/wippy-window-app/SKILL.md](skills/wippy-window-app/SKILL.md); the
 rules of this repository are in [AGENTS.md](AGENTS.md).
 
-Made from [the Windows module template](https://github.com/chicago-desktop/module-template) for
-modules of the Windows 95 shell. Repository:
+Made from [the Chicago module template](https://github.com/chicago-desktop/module-template) for
+modules of the Chicago shell. Repository:
 https://github.com/chicago-desktop/regedit. The Registry Editor was part of
 `chicago/shell` up to 0.1.1.
 

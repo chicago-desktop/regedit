@@ -15,7 +15,7 @@ entries:
     kind: ns.definition
     meta:
       title: Registry Editor
-      description: "The Registry Editor for the Windows 95 shell — a read-only viewer of the runtime's registry, for administrators."
+      description: "The Registry Editor for the Chicago desktop — a read-only viewer of the runtime's registry, for administrators."
 
   # ─── Dependencies ────────────────────────────────────────────────────
   # A compatibility range, never an exact version: the lock holds the exact
@@ -24,7 +24,7 @@ entries:
     name: dep.chicago.shell
     kind: ns.dependency
     meta:
-      comment: "The Windows 95 shell — its SDK lays out and draws the window (the tree, the table, the menu) and resolves the module's image pack."
+      comment: "The Chicago shell — its SDK lays out and draws the window (the tree, the table, the menu) and resolves the module's image pack."
     component: chicago/shell
 
   - version: "*"

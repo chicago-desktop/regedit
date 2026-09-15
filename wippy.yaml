@@ -1,6 +1,6 @@
 organization: chicago
 module: regedit
-description: The Registry Editor for the Windows 95 shell (chicago/shell) — a read-only viewer of the runtime's registry in the look of Windows 95 regedit, for administrators.
+description: The Registry Editor for the Chicago desktop — a read-only viewer of the runtime's registry in the look of the mid-nineties regedit, for administrators.
 license: MIT
 repository: https://github.com/chicago-desktop/regedit
 homepage: https://wippy.ai
