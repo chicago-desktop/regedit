@@ -1,0 +1,92 @@
+version: "1.0"
+namespace: windows.regedit
+
+# A registry viewer in the look of Windows 95 regedit: a tree of namespaces
+# and entries, the entry's fields, the path in the status bar. Read-only. The
+# window is built on the shell SDK: the tree, table, menu and status bar are
+# shared; the only thing of its own here is the tree model.
+#
+# Keep the comments of this file free of an unquoted `: ` — a colon followed
+# by a space inside a meta.comment or a YAML comment value breaks the parse
+# of the whole index, and the boot with it. Quote such comments.
+
+entries:
+  - name: definition
+    kind: ns.definition
+    meta:
+      title: Registry Editor
+      description: "The Registry Editor for the Windows 95 shell — a read-only viewer of the runtime's registry, for administrators."
+
+  # ─── Dependencies ────────────────────────────────────────────────────
+  # A compatibility range, never an exact version: the lock holds the exact
+  # one. `*` is any published version.
+  - version: "*"
+    name: dep.windows.shell
+    kind: ns.dependency
+    meta:
+      comment: "The Windows 95 shell — its SDK lays out and draws the window (the tree, the table, the menu), its catalog brings the picture."
+    component: windows/shell
+
+  - version: "*"
+    name: dep.windows.tui_desktop
+    kind: ns.dependency
+    meta:
+      comment: "The desktop base — the compositor that owns the window's frame, size and input, and asks the logged-on person's scope for windows.admin."
+    component: windows/tui-desktop
+
+  - name: model
+    kind: library.lua
+    meta:
+      comment: "The registry tree from a list of entries, visible rows, entry fields and the path — a pure build with no calls to the registry."
+    source: file://model.lua
+    imports:
+      geometry: windows.tui_desktop.desktop:geometry
+
+  # Provider of the registry viewer: the same as a view, plus READING the
+  # registry. `registry.apply` is not here and will not be (the shell's FR-004
+  # §3.4): the viewer changes nothing, and editing an entry is the business of
+  # the control panel under its own actor. The same actions as the shell's
+  # `regedit_state` had when the window lived there.
+  - name: window_scope
+    kind: security.policy
+    meta:
+      comment: "Permissions of the registry viewer provider — context, sending to the compositor, and reading the registry; no writing to the registry, on purpose."
+    policy:
+      actions:
+        - process.context
+        - process.registry
+        - process.send
+        - registry.get
+        - registry.find
+      resources: "*"
+      effect: allow
+
+  - name: window
+    kind: process.lua
+    meta:
+      type: tui_desktop.window
+      title: Registry Editor
+      # Shows every registry entry of the runtime: only for windows.admin.
+      requires: windows.admin
+      image: regedit
+      icon: "▤"
+      group: Settings
+      order: 110
+      window_type: app
+      resizable: true
+      width: 80
+      height: 24
+      pixel_render: windows.shell.sdk:render
+      pixel_state: windows.regedit:window
+      comment: "A registry viewer in the look of Windows 95 regedit — a tree of namespaces and entries, entry fields, the path; read-only; a window on the shell SDK."
+    source: file://window.lua
+    method: main
+    modules:
+      - json
+      - registry
+    security:
+      policies: [windows.regedit:window_scope]
+    imports:
+      app: windows.shell.sdk:app
+      ui: windows.shell.sdk:ui
+      model: windows.regedit:model

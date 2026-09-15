@@ -1,0 +1,25 @@
+organization: windows
+module: regedit
+description: The Registry Editor for the Windows 95 shell (windows/shell) — a read-only viewer of the runtime's registry in the look of Windows 95 regedit, for administrators.
+license: MIT
+repository: https://github.com/wippy-windows/regedit
+homepage: https://wippy.ai
+keywords:
+  - kickside
+  - tui
+  - terminal
+  - desktop
+  - windows
+# No `version:` here — the publisher picks it (`wippy publish` bumps the
+# latest published one). A published version is immutable.
+exclude_meta:
+  type:
+    - test
+exclude:
+  - "wippy.lock"
+  - "app:**"
+  - "app.env:**"
+  - "test/**"
+  - "test:**"
+  - ".wippy/**"
+  - ".wippy:**"

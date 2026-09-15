@@ -1,0 +1,12 @@
+{
+  "templateVersion": 1,
+  "initialized": true,
+  "identity": {
+    "organization": "windows",
+    "module": "regedit",
+    "namespace": "windows.regedit",
+    "tag": "windows-regedit",
+    "title": "Registry Editor",
+    "githubOwner": "wippy-windows"
+  }
+}
