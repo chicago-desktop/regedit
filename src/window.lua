@@ -62,7 +62,7 @@ end
 
 function definition.view(state: any, context: any): any
     if state.about then
-        return ui.message({title = "Registry Editor", image = "windows.regedit:images/regedit", icon = "▤", ok = "about_ok",
+        return ui.message({title = "Registry Editor", image = "chicago.regedit:images/regedit", icon = "▤", ok = "about_ok",
             lines = {"Reads the registry of this runtime.", "Read-only: changing an entry changes",
                 "the running application."}})
     end

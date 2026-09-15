@@ -1,7 +1,7 @@
 version: "1.0"
 namespace: app
 
-# Standalone harness for windows/regedit. Provides the host resources the boot
+# Standalone harness for chicago/regedit. Provides the host resources the boot
 # needs (app:db, app:processes, a gateway and a router for the shell's
 # endpoints, env storage, a permissive actor scope) and runs the co-located
 # *_test.lua suites. Excluded from publish by the module's wippy.yaml.
@@ -21,20 +21,20 @@ entries:
       type: test
       comment: "The registry tree model — namespaces by dots, folders before entries, visible rows and the path, entry fields."
       group: Registry Editor
-      suite: windows_regedit
+      suite: chicago_regedit
     source: file://model_test.lua
     method: run
     imports:
       test: wippy.test:test
-      reg_model: windows.regedit:model
+      reg_model: chicago.regedit:model
 
   - name: window_test
     kind: function.lua
     meta:
       type: test
-      comment: "The window's registry entry (Settings, windows.admin, its own picture) and its read-only policy; the SDK tree's expander and keys, scrolling, the menu, the whole registry from an empty filter; test/shots/regedit.png."
+      comment: "The window's registry entry (Settings, chicago.admin, its own picture) and its read-only policy; the SDK tree's expander and keys, scrolling, the menu, the whole registry from an empty filter; test/shots/regedit.png."
       group: Registry Editor
-      suite: windows_regedit
+      suite: chicago_regedit
     source: file://window_test.lua
     method: run
     # The window's own modules (it is loaded here as an import), `gfx` and
@@ -42,12 +42,12 @@ entries:
     modules: [tty, gfx, fs, registry, json]
     imports:
       test: wippy.test:test
-      ui: windows.shell.sdk:ui
-      render: windows.shell.sdk:render
-      rasters: windows.shell.theme:rasters
-      images: windows.shell.theme:images
-      reg_model: windows.regedit:model
-      regedit_window: windows.regedit:window
+      ui: chicago.shell.sdk:ui
+      render: chicago.shell.sdk:render
+      rasters: chicago.shell.theme:rasters
+      images: chicago.shell.theme:images
+      reg_model: chicago.regedit:model
+      regedit_window: chicago.regedit:window
 
   - name: shots
     kind: fs.directory
@@ -113,7 +113,7 @@ entries:
     kind: ns.dependency
     meta:
       comment: The module under test; its source is replaced with ../ in .wippy.yaml.
-    component: "windows/regedit"
+    component: "chicago/regedit"
 
   - name: regedit_harness.dep.migration
     version: "*"

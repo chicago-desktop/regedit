@@ -2,11 +2,11 @@
   "templateVersion": 1,
   "initialized": true,
   "identity": {
-    "organization": "windows",
+    "organization": "chicago",
     "module": "regedit",
-    "namespace": "windows.regedit",
-    "tag": "windows-regedit",
+    "namespace": "chicago.regedit",
+    "tag": "chicago-regedit",
     "title": "Registry Editor",
-    "githubOwner": "wippy-windows"
+    "githubOwner": "chicago-desktop"
   }
 }

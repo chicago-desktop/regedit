@@ -1,8 +1,8 @@
-# windows/regedit — Registry Editor
+# chicago/regedit — Registry Editor
 
 A module of the Windows 95 shell for the terminal desktop
-([windows/shell](https://github.com/wippy-windows/windows) on
-[windows/tui-desktop](https://github.com/wippy-windows/tui-desktop)): it adds
+([chicago/shell](https://github.com/chicago-desktop/shell) on
+[chicago/tui-desktop](https://github.com/chicago-desktop/tui-desktop)): it adds
 the **Registry Editor** to Start → Settings — a viewer of the runtime's
 registry in the look of Windows 95 regedit.
 
@@ -16,28 +16,28 @@ tree model.
 
 **Read-only.** Changing an entry changes the running application, and that
 belongs in a control panel under its own actor (the shell's FR-004 §3.4). The
-window's policy `windows.regedit:window_scope` has `registry.get` and
+window's policy `chicago.regedit:window_scope` has `registry.get` and
 `registry.find` but not `registry.apply`; the window has nothing to write
 with.
 
 **Only an administrator opens it.** The window shows every registry entry of
-the runtime, so its entry names `requires: windows.admin`, and the base's
+the runtime, so its entry names `requires: chicago.admin`, and the base's
 compositor asks the logged-on person's scope before opening it. An
-application grants `windows.admin` to its administrators; a group whose
+application grants `chicago.admin` to its administrators; a group whose
 policy allows `*` has it already. Nothing else is asked of the application.
 
 ## Inside
 
-- `windows.regedit:model` — the pure model: the tree from a list of entries
+- `chicago.regedit:model` — the pure model: the tree from a list of entries
   (folders before entries, alphabetically), the visible rows for the
   expanded keys, the path, the fields of an entry on one line each.
-- `windows.regedit:window` — the process on the shell's SDK
-  (`windows.shell.sdk:app`): reads the registry once on opening, then on F5.
-  Its picture is the module's own — `windows.regedit:images/regedit`, an
+- `chicago.regedit:window` — the process on the shell's SDK
+  (`chicago.shell.sdk:app`): reads the registry once on opening, then on F5.
+  Its picture is the module's own — `chicago.regedit:images/regedit`, an
   image pack of the shell under `assets/images` (32 and 16 px), copied from
   the shell's icon set (Microsoft's artwork from `shell32.dll`, see
   `assets/images/SOURCE.md`).
-- `windows.regedit:window_scope` — its permissions: the process context,
+- `chicago.regedit:window_scope` — its permissions: the process context,
   sending state to the compositor, reading the registry.
 
 ## Developing
@@ -51,7 +51,7 @@ make publish   # to the Hub, after `wippy auth login`
 ```
 
 **A local build of the runtime fork is required**
-([wippy-windows/runtime](https://github.com/wippy-windows/runtime), branch
+([chicago-desktop/runtime](https://github.com/chicago-desktop/runtime), branch
 `wippy-projects`): the shell declares the `gfx` module, which the release
 runtime does not have, and `wippy` from PATH does not load the shell at all.
 The Makefile's `WIPPY` names the build; override it with `make test WIPPY=…`.
@@ -61,10 +61,10 @@ shell's guide, and the skill for agents in
 [skills/wippy-window-app/SKILL.md](skills/wippy-window-app/SKILL.md); the
 rules of this repository are in [AGENTS.md](AGENTS.md).
 
-Made from [the Windows module template](https://github.com/wippy-windows/module-template) for
+Made from [the Windows module template](https://github.com/chicago-desktop/module-template) for
 modules of the Windows 95 shell. Repository:
-https://github.com/wippy-windows/regedit. The Registry Editor was part of
-`windows/shell` up to 0.1.1.
+https://github.com/chicago-desktop/regedit. The Registry Editor was part of
+`chicago/shell` up to 0.1.1.
 
 ## Licence
 

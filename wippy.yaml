@@ -1,15 +1,15 @@
-organization: windows
+organization: chicago
 module: regedit
-description: The Registry Editor for the Windows 95 shell (windows/shell) — a read-only viewer of the runtime's registry in the look of Windows 95 regedit, for administrators.
+description: The Registry Editor for the Windows 95 shell (chicago/shell) — a read-only viewer of the runtime's registry in the look of Windows 95 regedit, for administrators.
 license: MIT
-repository: https://github.com/wippy-windows/regedit
+repository: https://github.com/chicago-desktop/regedit
 homepage: https://wippy.ai
 keywords:
   - kickside
   - tui
   - terminal
   - desktop
-  - windows
+  - chicago
 # No `version:` here — the publisher picks it (`wippy publish` bumps the
 # latest published one). A published version is immutable.
 exclude_meta:
@@ -26,4 +26,4 @@ exclude:
 # The image pack lives outside src/ and is packed only when named here
 # (fs.directory -> fs.embed).
 embed:
-  - windows.regedit:images
+  - chicago.regedit:images

@@ -1,5 +1,5 @@
 -- The Registry Editor window: the registry entry the Start menu reads (the
--- Settings folder, windows.admin, the shell's picture) and its read-only
+-- Settings folder, chicago.admin, the shell's picture) and its read-only
 -- policy; the SDK tree's expander box and keys, scrolling, the menu, the
 -- whole registry from an empty filter; and a shot (test/shots/regedit.png)
 -- drawn by the shell's own renderer.
@@ -18,10 +18,10 @@ local CELL = {w = 10, h = 20}
 
 local records = {
     {id = "app:db", kind = "db.sql.sqlite", meta = {comment = "database"}, data = {file = ":memory:"}},
-    {id = "windows.shell.theme:chrome", kind = "library.lua", meta = {comment = "theme"},
+    {id = "chicago.shell.theme:chrome", kind = "library.lua", meta = {comment = "theme"},
         data = {source = "file://chrome.lua", modules = {"tty"}}},
-    {id = "windows.shell.theme:pixels", kind = "library.lua", meta = {}, data = {}},
-    {id = "windows.shell:shell", kind = "process.lua", meta = {title = "Shell"}, data = {}},
+    {id = "chicago.shell.theme:pixels", kind = "library.lua", meta = {}, data = {}},
+    {id = "chicago.shell:shell", kind = "process.lua", meta = {title = "Shell"}, data = {}},
     {id = "app.desktop:window_calc", kind = "process.lua", meta = {type = "tui_desktop.window"}, data = {}},
 }
 
@@ -65,26 +65,26 @@ end
 
 local function define_tests()
     test.describe("Registry Editor window", function()
-        test.it("is a Settings window on the shell SDK, for windows.admin only, with its own picture", function()
-            local _, meta = entry_of("windows.regedit:window")
+        test.it("is a Settings window on the shell SDK, for chicago.admin only, with its own picture", function()
+            local _, meta = entry_of("chicago.regedit:window")
             test.eq(table.concat({meta.type, meta.title, meta.group, meta.image, meta.window_type,
                 meta.pixel_render, meta.pixel_state}, "|"),
-                "tui_desktop.window|Registry Editor|Settings|windows.regedit:images/regedit|app|"
-                    .. "windows.shell.sdk:render|windows.regedit:window")
+                "tui_desktop.window|Registry Editor|Settings|chicago.regedit:images/regedit|app|"
+                    .. "chicago.shell.sdk:render|chicago.regedit:window")
             -- An entry without the field opens for everyone, silently: the
             -- compositor asks the logged-on person's scope only when it is named.
-            test.eq(meta.requires, "windows.admin")
+            test.eq(meta.requires, "chicago.admin")
             for _, size in ipairs({32, 16}) do
-                local picture, why = images.get("windows.regedit:images/regedit", size)
+                local picture, why = images.get("chicago.regedit:images/regedit", size)
                 test.not_nil(picture, "regedit@" .. tostring(size) .. ": " .. tostring(why))
             end
         end)
 
         test.it("reads the registry and cannot change it", function()
-            local data = entry_of("windows.regedit:window")
+            local data = entry_of("chicago.regedit:window")
             local security: any = data.security or {}
-            test.eq(table.concat(security.policies or {}, ","), "windows.regedit:window_scope")
-            local scope = entry_of("windows.regedit:window_scope")
+            test.eq(table.concat(security.policies or {}, ","), "chicago.regedit:window_scope")
+            local scope = entry_of("chicago.regedit:window_scope")
             local actions: any = {}
             for _, action in ipairs(scope.policy.actions) do actions[action] = true end
             test.is_true(actions["registry.find"] and actions["registry.get"] or false, "reads the registry")
@@ -117,7 +117,7 @@ local function define_tests()
                 x = tree.rect.x + 10, y = tree.rect.y + 4})
             test.eq(picked.type, "select")
             regedit.definition.update(state, picked, context)
-            test.eq(state.selected, "windows")
+            test.eq(state.selected, "chicago")
             interaction.focus = "tree"
             local function key(name)
                 plan = plan_now()
@@ -125,19 +125,19 @@ local function define_tests()
                 if action then regedit.definition.update(state, action, context) end
             end
             key("right")
-            test.is_true(state.expanded["windows"], "right on a collapsed one — expand")
+            test.is_true(state.expanded["chicago"], "right on a collapsed one — expand")
             key("right")
-            test.eq(state.selected, "windows.shell", "right on an expanded one — to the first child")
+            test.eq(state.selected, "chicago.shell", "right on an expanded one — to the first child")
             key("right")
-            test.is_true(state.expanded["windows.shell"])
+            test.is_true(state.expanded["chicago.shell"])
             key("left")
-            test.is_nil(state.expanded["windows.shell"], "left on an expanded one — collapse")
+            test.is_nil(state.expanded["chicago.shell"], "left on an expanded one — collapse")
             key("left")
-            test.eq(state.selected, "windows", "left on a collapsed one — to the parent")
+            test.eq(state.selected, "chicago", "left on a collapsed one — to the parent")
             key("end")
-            test.eq(state.selected, "windows.shell", "end — the last visible row")
+            test.eq(state.selected, "chicago.shell", "end — the last visible row")
             local tree_view = regedit.definition.view(state, context)
-            test.eq(tree_view.children[3].fields[1].text, "Registry\\windows\\shell")
+            test.eq(tree_view.children[3].fields[1].text, "Registry\\chicago\\shell")
         end)
 
         test.it("a long tree scrolls and keeps the selection on screen", function()
@@ -205,7 +205,7 @@ local function define_tests()
             test.is_nil(err)
             test.is_true(#found > 30, "the harness has more than thirty entries, found " .. tostring(#found))
             local root = reg_model.build(found)
-            local own = reg_model.find(root, "windows.regedit:window")
+            local own = reg_model.find(root, "chicago.regedit:window")
             test.not_nil(own, "the viewer's own entry must be found in the tree")
             test.eq(own.record.kind, "process.lua")
         end)
@@ -215,19 +215,19 @@ local function define_tests()
                 {id = "app:db", kind = "db.sql.sqlite", meta = {comment = "Stand database"}, data = {file = ".wippy/app.db"}},
                 {id = "app:api", kind = "http.router", meta = {}, data = {prefix = "/api/v1"}},
                 {id = "app.desktop:window_calc", kind = "process.lua", meta = {type = "tui_desktop.window", title = "Calculator"}, data = {}},
-                {id = "windows.shell.theme:chrome", kind = "library.lua", meta = {comment = "Cell theme"}, data = {source = "file://chrome.lua", modules = {"tty"}}},
-                {id = "windows.shell.theme:pixels", kind = "library.lua", meta = {comment = "Pixel primitives"}, data = {source = "file://pixels.lua"}},
-                {id = "windows.shell.theme:palette", kind = "library.lua", meta = {}, data = {}},
-                {id = "windows.shell:shell", kind = "process.lua", meta = {title = "Windows 95 shell"}, data = {method = "main", modules = {"gfx", "tty"}}},
-                {id = "windows.shell:terminal", kind = "terminal.host", meta = {}, data = {hide_logs = true}},
+                {id = "chicago.shell.theme:chrome", kind = "library.lua", meta = {comment = "Cell theme"}, data = {source = "file://chrome.lua", modules = {"tty"}}},
+                {id = "chicago.shell.theme:pixels", kind = "library.lua", meta = {comment = "Pixel primitives"}, data = {source = "file://pixels.lua"}},
+                {id = "chicago.shell.theme:palette", kind = "library.lua", meta = {}, data = {}},
+                {id = "chicago.shell:shell", kind = "process.lua", meta = {title = "Windows 95 shell"}, data = {method = "main", modules = {"gfx", "tty"}}},
+                {id = "chicago.shell:terminal", kind = "terminal.host", meta = {}, data = {hide_logs = true}},
                 {id = "wippy.security:process", kind = "security.group", meta = {}, data = {}},
             }
             local session = regedit.session(sample, nil)
-            for _, key in ipairs({"", "windows", "windows.shell", "windows.shell.theme"}) do
+            for _, key in ipairs({"", "chicago", "chicago.shell", "chicago.shell.theme"}) do
                 session.expanded[key] = true
             end
             session.rows = reg_model.flatten(session.root, session.expanded)
-            session.selected = "windows.shell.theme:chrome"
+            session.selected = "chicago.shell.theme:chrome"
             local context = {width = 78, height = 22, close = function() end}
             local tree = regedit.definition.view(session, context)
             test.is_nil(ui.problem(tree))
