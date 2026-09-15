@@ -32,7 +32,7 @@ entries:
     kind: function.lua
     meta:
       type: test
-      comment: "The window's registry entry (Settings, windows.admin, the shell's picture) and its read-only policy; the SDK tree's expander and keys, scrolling, the menu, the whole registry from an empty filter; test/shots/regedit.png."
+      comment: "The window's registry entry (Settings, windows.admin, its own picture) and its read-only policy; the SDK tree's expander and keys, scrolling, the menu, the whole registry from an empty filter; test/shots/regedit.png."
       group: Registry Editor
       suite: windows_regedit
     source: file://window_test.lua

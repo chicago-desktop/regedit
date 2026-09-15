@@ -33,7 +33,10 @@ policy allows `*` has it already. Nothing else is asked of the application.
   expanded keys, the path, the fields of an entry on one line each.
 - `windows.regedit:window` — the process on the shell's SDK
   (`windows.shell.sdk:app`): reads the registry once on opening, then on F5.
-  Its picture `regedit` comes from the shell's catalog.
+  Its picture is the module's own — `windows.regedit:images/regedit`, an
+  image pack of the shell under `assets/images` (32 and 16 px), copied from
+  the shell's icon set (Microsoft's artwork from `shell32.dll`, see
+  `assets/images/SOURCE.md`).
 - `windows.regedit:window_scope` — its permissions: the process context,
   sending state to the compositor, reading the registry.
 

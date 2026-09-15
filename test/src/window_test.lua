@@ -65,17 +65,17 @@ end
 
 local function define_tests()
     test.describe("Registry Editor window", function()
-        test.it("is a Settings window on the shell SDK, for windows.admin only, with the shell's picture", function()
+        test.it("is a Settings window on the shell SDK, for windows.admin only, with its own picture", function()
             local _, meta = entry_of("windows.regedit:window")
             test.eq(table.concat({meta.type, meta.title, meta.group, meta.image, meta.window_type,
                 meta.pixel_render, meta.pixel_state}, "|"),
-                "tui_desktop.window|Registry Editor|Settings|regedit|app|"
+                "tui_desktop.window|Registry Editor|Settings|windows.regedit:images/regedit|app|"
                     .. "windows.shell.sdk:render|windows.regedit:window")
             -- An entry without the field opens for everyone, silently: the
             -- compositor asks the logged-on person's scope only when it is named.
             test.eq(meta.requires, "windows.admin")
             for _, size in ipairs({32, 16}) do
-                local picture, why = images.get("regedit", size)
+                local picture, why = images.get("windows.regedit:images/regedit", size)
                 test.not_nil(picture, "regedit@" .. tostring(size) .. ": " .. tostring(why))
             end
         end)

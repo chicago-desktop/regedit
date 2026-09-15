@@ -23,3 +23,7 @@ exclude:
   - "test:**"
   - ".wippy/**"
   - ".wippy:**"
+# The image pack lives outside src/ and is packed only when named here
+# (fs.directory -> fs.embed).
+embed:
+  - windows.regedit:images
